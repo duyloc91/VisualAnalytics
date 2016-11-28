@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Rotating Icon Buttons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/button-style.css">
+
+    
+    <script src="js/prefixfree.min.js"></script>
+
+    
+  </head>
+
+  <body>
+
+    <h1>Global Warming Visual Analytics - Temperature Analysis</h1>
+<div class="main-wrapper">
+		<a href="linegraph.html"><i class="material-icons">explore</i><a/>
+		<a href="map.html"><i class="material-icons">public</i></a>
+    <style>
+
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #f4511e;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 12px;
+      padding: 20px;
+      width: 150px;
+      height: 50px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+
+    .button span:after {
+      content: '»';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+
+    .button:hover span {
+      padding-right: 25px;
+    }
+
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+
+#chart {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+}
+#chart path {
+  fill: none;
+}
+
+/* layers */
+#chart .layer-0 path {
+  fill: steelblue;
+}
+#chart .layer-1 path {
+  fill: white !important;
+  opacity: 0.3;
+  stroke-width: 2px;
+  stroke: #999;
+}
+
+/* Outer circle, tick-circles and spokes */
+#chart circle.outer {
+  stroke: #aaa;
+  stroke-dasharray: 4, 4;
+}
+#chart .tick-circles circle {
+  stroke: #ddd;
+  stroke-dasharray: 2, 2;
+}
+#chart .spokes line {
+  stroke: #666;
+  stroke-width: 0.2;
+}
+
+/* Axis */
+#chart .axis text {
+  font-size: 11px;
+}
+#chart .axis path {
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+#chart .axis line {
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+
+/* Labels */
+#chart .labels text {
+  fill: #333;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* update button */
+
+
+    </style>
+  </head>
+
+    <h1 id="header">Lybia</h1>
+    <h2 id="subheader">1819</h2>
+
+<!--*********************************-->
+Select country:
+<select onchange="countryFunction(this)">
+  <!--OMG COUNTRIES HERE-->
+<option>Libya</option>
+<option>Guyana</option>
+<option>Mauritius</option>
+<option>Tanzania</option>
+<option>Gibraltar [United Kingdom]</option>
+<option>Bermuda [United Kingdom]</option>
+<option>Sri Lanka</option>
+<option>Bahamas</option>
+<option>Jamaica</option>
+<option>Barbados</option>
+<option>China</option>
+<option>Malta</option>
+<option>Saint Helena [United Kingdom]</option>
+<option>[Missing]</option>
+<option>Suriname</option>
+<option>Thailand</option>
+<option>Trinidad and Tobago</option>
+<option>Belize</option>
+<option>Israel</option>
+<option>Turkey</option>
+<option>Cape Verde</option>
+<option>Madeira Islands [Portugal]</option>
+<option>Portugal</option>
+<option>Indonesia</option>
+<option>Vanuatu</option>
+<option>Singapore</option>
+<option>Chile</option>
+<option>Sao Tome and Principe</option>
+<option>Senegal</option>
+<option>Sierra Leone</option>
+<option>Bangladesh</option>
+<option>Burma / Myanmar</option>
+<option>India</option>
+<option>Pakistan</option>
+<option>Iran</option>
+<option>Algeria</option>
+<option>Angola</option>
+<option>Canary Islands [Spain]</option>
+<option>Egypt</option>
+<option>Yemen</option>
+<option>Cyprus</option>
+<option>Macau [Portugal]</option>
+<option>Malaysia</option>
+<option>Fiji</option>
+<option>Uruguay</option>
+<option>Eritrea</option>
+<option>Cameroon</option>
+<option>Namibia</option>
+<option>Nigeria</option>
+<option>Ghana</option>
+<option>Brazil</option>
+<option>Argentina</option>
+<option>Grenada</option>
+<option>Guadeloupe [France]</option>
+<option>Panama</option>
+<option>Tunisia</option>
+<option>Iraq</option>
+<option>Togo</option>
+<option>Korea</option>
+<option>French Guiana [France]</option>
+<option>Samoa</option>
+<option>Vietnam</option>
+<option>Antigua</option>
+<option>Gambia</option>
+<option>Lebanon</option>
+<option>Papua New Guinea</option>
+<option>Zimbabwe</option>
+<option>French Polynesia [France]</option>
+<option>Haiti</option>
+<option>Martinique [France]</option>
+<option>El Salvador</option>
+<option>Kenya</option>
+<option>Peru</option>
+<option>Oman</option>
+<option>St. Lucia</option>
+<option>Morocco</option>
+<option>Nauru</option>
+<option>Ecuador</option>
+<option>Gabon</option>
+<option>Mali</option>
+<option>Benin</option>
+<option>Malawi</option>
+<option>Guatemala</option>
+<option>Congo</option>
+<option>Bolivia</option>
+<option>Dominican Republic</option>
+<option>Cook Islands [New Zealand]</option>
+<option>Seychelles</option>
+<option>Cuba</option>
+<option>Cambodia</option>
+<option>Laos</option>
+<option>New Caledonia [France]</option>
+<option>Uganda</option>
+<option>Ethiopia</option>
+<option>Madagascar</option>
+<option>Sudan</option>
+<option>Philippines</option>
+<option>Cocos (Keeling) Islands [Australia]</option>
+<option>Somalia</option>
+<option>0.5</option>
+<option>Chad</option>
+<option>Kiribati</option>
+<option>Niger</option>
+<option>Venezuela</option>
+<option>Cote D'Ivoire</option>
+<option>Ceuta and Melilla [Spain]</option>
+<option>Comoros</option>
+<option>Guinea</option>
+<option>Reunion and Associated Islands [France]</option>
+<option>Burkina Faso</option>
+<option>Mauritania</option>
+<option>Mozambique</option>
+<option>Falkland Islands [United Kingdom]</option>
+<option>Federated States of Micronesia</option>
+<option>Guinea-Bissau</option>
+<option>Japan</option>
+<option>Niue [New Zealand]</option>
+<option>Solomon Islands</option>
+<option>Zaire</option>
+<option>Djibouti</option>
+<option>Montserrat [United Kingdom]</option>
+<option>United States</option>
+<option>Swaziland</option>
+<option>Lesotho</option>
+<option>Colombia</option>
+<option>Zambia</option>
+<option>Virgin Islands [United Kingdom]</option>
+<option>Marshall Islands</option>
+<option>Botswana</option>
+<option>Northern Mariana Islands [United States]</option>
+<option>Tonga</option>
+<option>Jordan</option>
+<option>Liberia</option>
+<option>New Zealand</option>
+<option>Pitcairn Islands [United Kingdom]</option>
+<option>Honduras</option>
+<option>Central African Republic</option>
+<option>Wallis and Futuna [France]</option>
+<option>Mayotte [France]</option>
+<option>Aruba</option>
+
+
+  <!--OMG COUNTRIES HERE-->
+</select>
+
+<p id="demo"></p>
+
+<script>
+var currentCountry = 'Libya';
+function countryFunction(selTag) {
+    var x = selTag.options[selTag.selectedIndex].text;
+    document.getElementById("header").innerHTML = x;
+    currentCountry = x;
+}
+</script>
+<!--*********************************-->
+
+<!--
+    <button type="button" id="downdate">Previous Year</button>
+    <button type="button" id="update">Next Year</button>
+  -->
+
+  <button class="button" style="vertical-align:middle" id="downdate"><span>Previous Year </span></button>
+  <button class="button" style="vertical-align:middle" id="update"><span>Next Year </span></button>
+
+
+
+    <div id="chart"></div>
+
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/radialBarChart.js"></script>
+
+
+
+
+<style>
+  #byte_content {
+    margin: 5px 0;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  #byte_range { margin-top: 5px; }
+</style>
+
+<input type="file" id="files" name="file" /> Load File:
+<span class="readBytesButtons">
+
+  <button class="button">Load File</button>
+</span>
+<div id="byte_range"></div>
+<div id="byte_content"></div>
+
+<script>
+  var tempdata = {};
+  function readBlob(opt_startByte, opt_stopByte) {
+      console.log("Checkpoint 1");
+    var files = document.getElementById('files').files;
+    if (!files.length) {
+      alert('Please select a file!');
+      return;
+    }
+
+    var file = files[0];
+    var start = parseInt(opt_startByte) || 0;
+    var stop = parseInt(opt_stopByte) || file.size - 1;
+    //&&&&&&
+    var blob = file.slice(start, stop + 1);
+    //reader.readAsBinaryString(blob);
+
+
+    //&&&&&
+
+    var reader = new FileReader();
+    reader.readAsText(blob);
+    // If we use onloadend, we need to check the readyState.
+    reader.onloadend = function(evt) {
+      console.log("Checkpoint 2");
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+        document.getElementById('byte_content').textContent = evt.target.result;
+        document.getElementById('byte_range').textContent =
+            ['Read : ', start + 1, ' - ', stop + 1,
+             ' of ', file.size, ' byte file'].join('');
+      }
+      console.log("Checkpoint 3");
+      var text = evt.target.result;
+      var lines = text.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
+
+      for(var i = 0; i < lines.length; i++) {
+          if (lines[i].length > 1){
+            //tempdata.push('<li>' + lines[i] + '<br>');
+            var linecontent = lines[i].split(',');
+            var countrydate = {country:linecontent[0], temp:linecontent[1], month:linecontent[2], year:linecontent[3]};
+            //tempdata.push(countrydate);
+            var tempcontent = {temp:linecontent[1], month:linecontent[2], year:linecontent[3]};
+            if(!tempdata[linecontent[0]]){
+              tempdata[linecontent[0]] = [];
+            }
+            tempdata[linecontent[0]].push(tempcontent);
+          }
+      }
+    };
+
+    var blob = file.slice(start, stop + 1);
+    //reader.readAsBinaryString(blob);
+
+    //reader.readAsText(blob);
+
+    console.log(tempdata);
+
+
+  }
+
+  document.querySelector('.readBytesButtons').addEventListener('click', function(evt) {
+    if (evt.target.tagName.toLowerCase() == 'button') {
+      var startByte = evt.target.getAttribute('data-startbyte');
+      var endByte = evt.target.getAttribute('data-endbyte');
+      readBlob(startByte, endByte);
+    }
+  }, false);
+</script>
+
+
+    <script>
+
+
+
+var data = null;
+var keys = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+//------------------------------------
+//console.log("THIS IS MY SHIT tempdata: ", tempdata[1]);
+
+//------------------------------------
+
+var currentYear = 1819;
+
+function initData() {
+  data = [{data: {}}];
+  //for(var i=0; i<keys.length; i++)
+    //data[0].data[keys[i]] = Math.random() * 10;
+
+    //look for the relevent lines
+    // var m1 = 0;
+    // var m2 = 0;
+    // var m3 = 0;
+    // var m4 = 0;
+    // var m5 = 0;
+    // var m6 = 0;
+    // var m7 = 0;
+    // var m8 = 0;
+    // var m9 = 0;
+    // var m10 = 0;
+    // var m11 = 0;
+    // var m12 = 0;
+
+
+
+    var element = document.getElementById("header");
+    element.innerHTML = currentCountry;
+    document.getElementById("subheader").innerHTML = currentYear;
+    //document.write("Country: ", currentCountry,"    Year:", currentYear);
+    if(tempdata[currentCountry]){
+      console.log(tempdata[currentCountry]);
+      for(var i = 0; i < tempdata[currentCountry].length; i++){
+        if(tempdata[currentCountry][i].year == currentYear){
+          //if(tempdata[i].country == currentCountry){
+            data[0].data[keys[tempdata[currentCountry][i].month-1]] = tempdata[currentCountry][i].temp;
+          //}
+        }
+      }
+    }else{
+      data[0].data[keys[0]] = 0
+      data[0].data[keys[1]] = 0
+      data[0].data[keys[2]] = 0
+      data[0].data[keys[3]] = 0
+      data[0].data[keys[4]] = 0
+      data[0].data[keys[5]] = 0
+      data[0].data[keys[6]] = 0
+      data[0].data[keys[7]] = 0
+      data[0].data[keys[8]] = 0
+      data[0].data[keys[9]] = 0
+      data[0].data[keys[10]] = 0
+      data[0].data[keys[11]] = 0
+    }
+
+
+
+
+
+
+};
+
+function update() {
+    if(tempdata[currentCountry]){
+      var trigger = 0;
+      currentYear+=1;
+      while (trigger==0){
+        for(var i = 0; i < tempdata[currentCountry].length; i++){
+          if(tempdata[currentCountry][i].year == (currentYear)){
+            trigger = 1;
+          }
+        }
+        if(trigger==0){
+          if(currentYear < 2016){
+              currentYear +=1;
+          }else{
+            trigger = 1;
+          }
+
+        }
+      }
+    }
+
+
+
+
+  initData();
+
+  d3.select('#chart')
+    .datum(data)
+    .call(chart);
+}
+
+function downdate() {
+  if(tempdata[currentCountry]){
+    var trigger = 0;
+    currentYear-=1;
+    while (trigger==0){
+      for(var i = 0; i < tempdata[currentCountry].length; i++){
+        if(tempdata[currentCountry][i].year == (currentYear)){
+          trigger = 1;
+        }
+      }
+      if(trigger==0){
+        if(currentYear > 1800){
+            currentYear -=1;
+        }else{
+          trigger = 1;
+        }
+
+      }
+    }
+  }
+  initData();
+
+  d3.select('#chart')
+    .datum(data)
+    .call(chart);
+}
+
+d3.select('#update')
+  .on('click', update);
+
+d3.select('#downdate')
+  .on('click', downdate);
+
+var chart = radialBarChart()
+  .barHeight(250)
+  .reverseLayerOrder(true)
+  .capitalizeLabels(true)
+  .barColors(['#B66199', '#9392CB', '#76D9FA', '#BCE3AD', '#FFD28C', '#F2918B'])
+  .domain([-10,40])
+  .tickValues([-10,-5,0,5,10,15,20,25,30,35,40])
+  .tickCircleValues([-10,-5,0,5,10,15,20,25,30,35,40]);
+
+update();
+
+    </script>
+
+</div>
+<p>VA by Nguyen Duy Loc & Nguyen Luong Thanh Minh</p>
+    
+    
+    
+    
+    
+  </body>
+</html>
