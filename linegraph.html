@@ -22,6 +22,178 @@
   		<a href="index.html"><i class="material-icons">settings</i><a/>
   		<a href="map.html"><i class="material-icons">public</i></a>
 
+      <!-- Styles -->
+<style>
+#chartdiv {
+  width : 100%;
+  height  : 500px;
+}                         
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+
+<!-- Chart code -->
+<script>
+
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "light",
+    "legend": {
+        "useGraphSettings": true
+    },
+    "dataProvider": [{date: 1880,
+            temperature: 32.2375,
+            carbon: 236,
+            sealvl: 0.952755905
+    },
+    {date: 1890,
+            temperature: 30.0666,
+            carbon: 356,
+            sealvl: 1.255905511
+    },
+    {date: 1900,
+            temperature: 31.1083,
+            carbon: 534,
+            sealvl: 1.846456691
+    },
+    {date: 1910,
+            temperature: 30.8416,
+            carbon: 819,
+            sealvl: 1.846456691
+    },
+    {date: 1920,
+            temperature: 31.5083,
+            carbon: 932,
+            sealvl: 2.417322832
+    },
+    {date: 1930,
+            temperature: 30.8833,
+            carbon: 1053,
+            sealvl: 2.535433068
+    },
+    {date: 1940,
+            temperature: 30.475,
+            carbon: 1299,
+            sealvl: 3.055118107
+    },
+    {date: 1950,
+            temperature: 30.4166,
+            carbon: 1630,
+            sealvl: 3.909448815
+    },
+    {date: 1960,
+            temperature: 31,
+            carbon: 2569,
+            sealvl: 4.763779523
+    },
+    {date: 1970,
+            temperature: 31,
+            carbon: 4053,
+            sealvl: 4.9527559
+    },
+    {date: 1980,
+            temperature: 31,
+            carbon: 5313,
+            sealvl: 5.854330703
+    },
+    {date: 1990,
+            temperature: 31,
+            carbon: 6121,
+            sealvl: 6.492125978
+    },
+    {date: 2000,
+            temperature: 31,
+            carbon: 6763,
+            sealvl: 7.334645662
+    },
+    {date: 2010,
+            temperature: 31,
+            carbon: 9140,
+            sealvl: 9.185039361
+    }],
+    "synchronizeGrid":true,
+    "valueAxes": [{
+        "id":"v1",
+        "axisColor": "#FF6600",
+        "axisThickness": 2,
+        "axisAlpha": 1,
+        "position": "left"
+    }, {
+        "id":"v2",
+        "axisColor": "#FCD202",
+        "axisThickness": 2,
+        "axisAlpha": 1,
+        "position": "right"
+    }, {
+        "id":"v3",
+        "axisColor": "#B0DE09",
+        "axisThickness": 2,
+        "gridAlpha": 0,
+        "offset": 50,
+        "axisAlpha": 1,
+        "position": "left"
+    }],
+    "graphs": [{
+        "valueAxis": "v1",
+        "lineColor": "#FF6600",
+        "bullet": "round",
+        "bulletBorderThickness": 1,
+        "hideBulletsCount": 30,
+        "title": "Earth Surface Temperature",
+        "valueField": "temperature",
+    "fillAlphas": 0
+    }, {
+        "valueAxis": "v2",
+        "lineColor": "#FCD202",
+        "bullet": "square",
+        "bulletBorderThickness": 1,
+        "hideBulletsCount": 30,
+        "title": "Carbon Emission",
+        "valueField": "carbon",
+    "fillAlphas": 0
+    }, {
+        "valueAxis": "v3",
+        "lineColor": "#B0DE09",
+        "bullet": "triangleUp",
+        "bulletBorderThickness": 1,
+        "hideBulletsCount": 30,
+        "title": "Sea Level",
+        "valueField": "sealvl",
+    "fillAlphas": 0
+    }],
+    "chartScrollbar": {},
+    "chartCursor": {
+        "cursorPosition": "mouse"
+    },
+    "categoryField": "date",
+    "categoryAxis": {
+        "parseDates": false,
+        "axisColor": "#DADADA",
+        "minorGridEnabled": true
+    },
+    "export": {
+      "enabled": true,
+        "position": "bottom-right"
+     }
+});
+
+chart.addListener("dataUpdated", zoomChart);
+zoomChart();
+
+
+function zoomChart(){
+    chart.zoomToIndexes(chart.dataProvider.length - 20, chart.dataProvider.length - 1);
+}
+
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
     </div>
     <p>VA by Nguyen Duy Loc & Nguyen Luong Thanh Minh</p>
     
